@@ -1,0 +1,7 @@
+<Solution>
+  <Configurations>
+    <Platform Name="x64" />
+    <Platform Name="x86" />
+  </Configurations>
+  <Project Path="Gylph/Gylph.vcxproj" Id="58daacba-40fa-4403-92b6-7ead6e74d71d" />
+</Solution>
