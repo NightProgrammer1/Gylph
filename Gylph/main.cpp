@@ -15,6 +15,19 @@
 #include "style.h"
 #include "layout.h"
 #include "display.h"
+#include <SDL3_ttf/SDL_ttf.h>
+
+// Initial viewport / containing block dimensions
+constexpr int kWindowWidth = 1024;
+constexpr int kWindowHeight = 768;
+static SDL_Window* window = nullptr;
+static SDL_Renderer* renderer = nullptr;
+static  TTF_Font* font = nullptr;
+
+extern unsigned char tiny_ttf[];
+extern unsigned char tiny_ttf_len;
+
+
 
 namespace {
 
@@ -61,7 +74,44 @@ namespace {
 
 } // namespace
 
+
+SDL_AppResult SDL_AppInit(int argc, char* argv[]) {
+
+    window = SDL_CreateWindow(
+        "Glyph - Layout & Display List",
+        kWindowWidth,
+        kWindowHeight,
+        SDL_WINDOW_RESIZABLE
+    );
+    if (!window) {
+        SDL_Log("SDL_CreateWindow failed: %s\n", SDL_GetError());
+        return SDL_APP_FAILURE;
+    }
+
+    renderer = SDL_CreateRenderer(window, nullptr);
+    if (!renderer) {
+        SDL_Log("SDL_CreateRenderer failed: %s\n", SDL_GetError());
+        SDL_DestroyWindow(window);
+        return SDL_APP_FAILURE;
+
+    }
+
+    if (!TTF_Init()) {
+        SDL_Log("Failed to initialize font: %s\n", SDL_GetError());
+        return SDL_APP_FAILURE;
+    }
+
+    font = TTF_OpenFontIO(SDL_IOFromConstMem(tiny_ttf, tiny_ttf_len), true, 18.0f);
+    if (!font) {
+        SDL_Log("Couldn't open font: %s\n", SDL_GetError());
+        return SDL_APP_FAILURE;
+    }
+}
+
 int main(int argc, char* argv[]) {
+
+
+    SDL_AppInit(argc, argv);
     std::string htmlPath = (argc > 1) ? argv[1] : "test.html";
     std::string cssPath = (argc > 2) ? argv[2] : "css.css";
 
@@ -94,9 +144,7 @@ int main(int argc, char* argv[]) {
         return EXIT_FAILURE;
     }
 
-    // Initial viewport / containing block dimensions
-    constexpr int kWindowWidth = 1024;
-    constexpr int kWindowHeight = 768;
+   
 
     Dimension viewport{};
     viewport.content.x = 0.0;
@@ -115,25 +163,8 @@ int main(int argc, char* argv[]) {
         return EXIT_FAILURE;
     }
 
-    SDL_Window* window = SDL_CreateWindow(
-        "Glyph - Layout & Display List",
-        kWindowWidth,
-        kWindowHeight,
-        SDL_WINDOW_RESIZABLE
-    );
-    if (!window) {
-        std::cerr << "SDL_CreateWindow failed: " << SDL_GetError() << "\n";
-        SDL_Quit();
-        return EXIT_FAILURE;
-    }
 
-    SDL_Renderer* renderer = SDL_CreateRenderer(window, nullptr);
-    if (!renderer) {
-        std::cerr << "SDL_CreateRenderer failed: " << SDL_GetError() << "\n";
-        SDL_DestroyWindow(window);
-        SDL_Quit();
-        return EXIT_FAILURE;
-    }
+    
 
     bool running = true;
     SDL_Event event{};
