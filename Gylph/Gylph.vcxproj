@@ -161,13 +161,24 @@ exit 0</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="css.cpp" />
+    <ClCompile Include="Layout.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="tokenization.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="css.h" />
+    <ClInclude Include="css_colors.h" />
+    <ClInclude Include="debug.h" />
+    <ClInclude Include="display.h" />
     <ClInclude Include="dom.h" />
+    <ClInclude Include="layout.h" />
+    <ClInclude Include="parser.h" />
+    <ClInclude Include="style.h" />
     <ClInclude Include="tokenization.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="css.css" />
     <None Include="test.html" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -1,0 +1,64 @@
+* {
+    display: block;
+}
+
+.canvas {
+    padding: 32px;
+    background: #1e293b;
+}
+
+.header {
+    padding: 36px;
+    background: #334155;
+}
+
+.brand {
+    padding: 28px;
+    background: teal;
+}
+
+.nav-slot {
+    padding: 24px;
+    background: dodgerblue;
+}
+
+.main {
+    padding: 36px;
+    background: #0f172a;
+}
+
+.panel-primary {
+    padding: 32px;
+    background: steelblue;
+}
+
+.card {
+    padding: 44px;
+    background: coral;
+}
+
+.card-inner {
+    padding: 36px;
+    background: gold;
+}
+
+.panel-secondary {
+    padding: 32px;
+    background: slategray;
+}
+
+.swatch {
+    padding: 36px;
+    background: mediumseagreen;
+}
+
+.footer {
+    padding: 48px;
+    background: rebeccapurple;
+}
+
+.unused {
+    display: none;
+    padding: 100px;
+    background: hotpink;
+}

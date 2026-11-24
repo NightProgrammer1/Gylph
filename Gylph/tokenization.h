@@ -3,8 +3,7 @@
 #include <string>
 #include <unordered_map>
 #include <optional>
-#include <assert.h>
-#include <iostream>
+
 
 
 enum class Token : uint8_t {
@@ -15,19 +14,6 @@ enum class Token : uint8_t {
 	Comment,        // <!-- comment -->
 	Doctype,        // <!DOCTYPE html>
 	EndOfFile       // Stream termination
-};
-
-
-enum class State {
-	Data,             // Default state (parsing text content)
-	TagOpen,          
-	TagName,          
-	BeforeAttributeName,
-	AttributeName,
-	AfterAttributeName,
-	BeforeAttributeValue,
-	AttributeValue,
-	SelfClosingStartTag
 };
 
 
@@ -134,6 +120,7 @@ private:
 		return attributes;
 	}
 
+	//Parses string of text inside elements
 	TokenObject ParseText() {
 		auto n = PeekChar();
 		std::string text = "";
@@ -142,7 +129,7 @@ private:
 			if (Match('<')) {
 				break;
 			}
-			else if (std::isalnum(*c) || *c == '-' || *c == '_') {
+			else if (std::isalnum(*c) || *c == '-' || *c == '_' || *c == ' ') {
 				text.push_back(*c);
 				Advance();
 			}
@@ -158,7 +145,7 @@ private:
 		TokenObject object;
 		Expect('<');
 		auto tag = ParseName();
-		auto attributesMap = ParseAttributes(); // Returns the whole map
+		auto attributesMap = ParseAttributes(); 
 
 		if (Match('/') && Match('>', 1)) {
 			Expect('/');
@@ -224,16 +211,7 @@ private:
 
 		return false;
 	}
-	void Expect(char c)
-	{
-		if (Match(c))
-		{
-			Advance();
-
-			return;
-		}
-		std::cerr << "Failed to consume character: " << c << std::endl;
-	}
+	void Expect(char c);
 
 	
 	size_t _index = 0;
