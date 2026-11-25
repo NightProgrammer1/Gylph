@@ -105,4 +105,4 @@ Text nodes are not rendered by Glyph yet, so this example uses empty `<div>` ele
 .unused { display: none; padding: 100px; background: hotpink; }
 ```
 
-![Layout & Display List.png](Gylph/Images/Layout & Display List.png)
+![Layout & Display List.png](Gylph/Images/Layout&DisplayList.png)
